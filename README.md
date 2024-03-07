@@ -11,8 +11,35 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pharetra urna a sem 
 ### LINKS 
 <https://hpccsystems.com>
 
-[Link style 1] (https://hpccsystems.com)
+[Link style 1](https://hpccsystems.com)
 
-[Link style 2 with title] (https://hpccsystems.com "TITlE")
+[Link style 2 with title](https://hpccsystems.com "TITlE")
+
+# Developer Links
+HPCC Platform Development Teams-Wiki:
+
+<https://reedelsevier.sharepoint.com/:o:/r/sites/OG-HPCCPlatformTeam/SiteAssets/OG-HPCC%20Platform%20Team%20Notebook?d=wbadf11fdaa0145838b644423ace873c9&csf=1&web=1&e=auJI6x>
+
+or 
+
+[HPCC Developers Wiki](https://reedelsevier.sharepoint.com/:o:/r/sites/OG-HPCCPlatformTeam/SiteAssets/OG-HPCC%20Platform%20Team%20Notebook?d=wbadf11fdaa0145838b644423ace873c9&csf=1&web=1&e=8AvouV)
+
+[HPCC Systems DevDocs](https://g-pan.github.io/HPCC-Platform/devdoc/README.html)
+
+### Internal OPS Links
+[INTERNAL OPS](https://eclwatch.risk.regn.net)
+
+[OPS: ECLWatch.Seisint](http://eclwatch.seisint.com/)
+ Note: I do not have access to this site any longer - ergo -  only authorized users can access 
+ 
+[INTERNAL OPS] > <eclwatch.risk.regn.net>
+
+INTERNAL OPS PAGE III:  https://eclwatch.risk.regn.net
+
+INTERNAL OPS PAGE IV:  <https://eclwatch.risk.regn.net>
 
 
+### HPCC Systems Community:
+[HPCC Systems Community Sharepoint Site](https://reedelsevier.sharepoint.com/:u:/r/sites/the_Link/HPCC/SitePages/Home.aspx?csf=1&web=1&e=ktxtBP)
+
+ADD MORE CONTENT AS APPROPRIATE.
