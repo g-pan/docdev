@@ -26,6 +26,8 @@ or
 
 [HPCC Systems DevDocs](https://g-pan.github.io/HPCC-Platform/devdoc/README.html)
 
+https://g-pan.github.io/HPCC-Platform/
+
 ### Internal OPS Links
 [INTERNAL OPS](https://eclwatch.risk.regn.net)
 
