@@ -11,7 +11,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pharetra urna a sem 
 ### LINKS 
 <https://hpccsystems.com>
 
-[Link style 1](https://hpccsystems.com)
+[HPCCSystems.com](https://hpccsystems.com)
 
 [HPCC-Documentation Home Page](https://reedelsevier.sharepoint.com/sites/HPCCSystemsDocumentationHome)
 
