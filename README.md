@@ -13,7 +13,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pharetra urna a sem 
 
 [Link style 1](https://hpccsystems.com)
 
-[Link style 2 with title](https://hpccsystems.com "TITlE")
+[HPCC-Documentation Home Page](https://reedelsevier.sharepoint.com/sites/HPCCSystemsDocumentationHome)
 
 # Developer Links
 HPCC Platform Development Teams-Wiki:
