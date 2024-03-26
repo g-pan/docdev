@@ -15,7 +15,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pharetra urna a sem 
 
 [HPCC-Documentation Home Page](https://reedelsevier.sharepoint.com/sites/HPCCSystemsDocumentationHome)
 
-[HPCC-Platform Teams] (https://reedelsevier.sharepoint.com/sites/OG-HPCCPlatformTeam)
+[HPCC-Platform Teams](https://reedelsevier.sharepoint.com/sites/OG-HPCCPlatformTeam)
 
 # Developer Links
 HPCC Platform Development Teams-Wiki:
