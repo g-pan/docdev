@@ -2,7 +2,7 @@
 DocDevelopment Repo
 
 Adding more content 
-for the sake of adding more content
+for the sake of adding more content for the Demo
 
 ## Ceasar Says 
 
