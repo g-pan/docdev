@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HPCC Platform Tests</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .test-table {
+            margin: 2em auto;
+            border-collapse: collapse;
+            min-width: 900px;
+            max-width: 1100px;
+        }
+        .test-table th, .test-table td {
+            border: 1px solid #ddd;
+            padding: 6px 10px;
+            text-align: center;
+        }
+        .test-table th {
+            background: #f2f2f2;
+        }
+        /* test type group shading */
+        .type-group {
+            background-color: #e7f7fb;
+        }
+        .type-group:nth-of-type(odd) {
+            background-color: #fffbe8;
+        }
+        .test-type {
+            font-weight: bold;
+            font-size: 1.15em;
+            text-align: left;
+            background: #ddebf7 !important;
+        }
+        .platform-label { font-style: italic; background: #fafafa; }
+        /* colored bullets */
+        .bullet-green { color: #16831b; font-size: 1.15em; }
+        .bullet-red { color: #d00; font-size: 1.15em; }
+        .bullet-yellow { color: #ffae00; font-size: 1.15em; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">HPCC Platform Test Results</h2>
+    <table class="test-table">
+        <tr>
+            <th>Test Type</th>
+            <th>Platform</th>
+            <th>9.12.x</th>
+            <th>9.14.x</th>
+            <th>10.0.x</th>
+            <th>10.2.x</th>
+            <th>master</th>
+        </tr>
+        <!-- REGRESSION -->
+        <tbody class="type-group">
+            <tr>
+                <td class="test-type" rowspan="3">Regression</td>
+                <td class="platform-label">hthor</td>
+                <td><span class="bullet-green">&#9679;</span> 1,245/1,250 (99.6%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,248/1,250 (99.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,246/1,250 (99.7%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,243/1,250 (99.4%)</td>
+                <td><span class="bullet-red">&#9679;</span> 1,215/1,250 (97.2%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Thor</td>
+                <td><span class="bullet-yellow">&#9679;</span> 1,238/1,250 (99.0%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,247/1,250 (99.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,244/1,250 (99.5%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,241/1,250 (99.3%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,240/1,250 (99.2%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Roxie</td>
+                <td><span class="bullet-green">&#9679;</span> 1,242/1,250 (99.4%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,249/1,250 (99.9%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,247/1,250 (99.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,244/1,250 (99.5%)</td>
+                <td><span class="bullet-green">&#9679;</span> 1,243/1,250 (99.4%)</td>
+            </tr>
+        </tbody>
+        <!-- OBT -->
+        <tbody class="type-group">
+            <tr>
+                <td class="test-type" rowspan="3">OBT</td>
+                <td class="platform-label">hthor</td>
+                <td><span class="bullet-green">&#9679;</span> 892/900 (99.1%)</td>
+                <td><span class="bullet-green">&#9679;</span> 898/900 (99.8%)</td>
+                <td><span class="bullet-yellow">&#9679;</span> 875/900 (97.2%)</td>
+                <td><span class="bullet-green">&#9679;</span> 891/900 (99.0%)</td>
+                <td><span class="bullet-yellow">&#9679;</span> 872/900 (96.9%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Thor</td>
+                <td><span class="bullet-green">&#9679;</span> 895/900 (99.4%)</td>
+                <td><span class="bullet-green">&#9679;</span> 896/900 (99.6%)</td>
+                <td><span class="bullet-green">&#9679;</span> 893/900 (99.2%)</td>
+                <td><span class="bullet-green">&#9679;</span> 894/900 (99.3%)</td>
+                <td><span class="bullet-green">&#9679;</span> 890/900 (98.9%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Roxie</td>
+                <td><span class="bullet-green">&#9679;</span> 897/900 (99.7%)</td>
+                <td><span class="bullet-green">&#9679;</span> 899/900 (99.9%)</td>
+                <td><span class="bullet-green">&#9679;</span> 897/900 (99.7%)</td>
+                <td><span class="bullet-green">&#9679;</span> 896/900 (99.6%)</td>
+                <td><span class="bullet-green">&#9679;</span> 895/900 (99.4%)</td>
+            </tr>
+        </tbody>
+        <!-- BVT -->
+        <tbody class="type-group">
+            <tr>
+                <td class="test-type" rowspan="3">BVT</td>
+                <td class="platform-label">hthor</td>
+                <td><span class="bullet-green">&#9679;</span> 156/160 (97.5%)</td>
+                <td><span class="bullet-green">&#9679;</span> 160/160 (100%)</td>
+                <td><span class="bullet-green">&#9679;</span> 158/160 (98.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 157/160 (98.1%)</td>
+                <td><span class="bullet-green">&#9679;</span> 155/160 (96.9%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Thor</td>
+                <td><span class="bullet-green">&#9679;</span> 158/160 (98.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 159/160 (99.4%)</td>
+                <td><span class="bullet-green">&#9679;</span> 157/160 (98.1%)</td>
+                <td><span class="bullet-green">&#9679;</span> 156/160 (97.5%)</td>
+                <td><span class="bullet-green">&#9679;</span> 157/160 (98.1%)</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Roxie</td>
+                <td><span class="bullet-green">&#9679;</span> 159/160 (99.4%)</td>
+                <td><span class="bullet-green">&#9679;</span> 160/160 (100%)</td>
+                <td><span class="bullet-green">&#9679;</span> 159/160 (99.4%)</td>
+                <td><span class="bullet-green">&#9679;</span> 158/160 (98.8%)</td>
+                <td><span class="bullet-green">&#9679;</span> 159/160 (99.4%)</td>
+            </tr>
+        </tbody>
+        <!-- COVERAGE -->
+        <tbody class="type-group">
+            <tr>
+                <td class="test-type" rowspan="3">Coverage</td>
+                <td class="platform-label">hthor</td>
+                <td><span class="bullet-green">&#9679;</span> 82.4% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 83.7% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 84.9% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 85.3% lines</td>
+                <td><span class="bullet-yellow">&#9679;</span> 76.8% lines</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Thor</td>
+                <td><span class="bullet-green">&#9679;</span> 85.2% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 86.1% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 87.5% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 88.2% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 89.1% lines</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Roxie</td>
+                <td><span class="bullet-green">&#9679;</span> 79.8% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 81.3% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 82.6% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 83.7% lines</td>
+                <td><span class="bullet-green">&#9679;</span> 84.5% lines</td>
+            </tr>
+        </tbody>
+        <!-- PERFORMANCE -->
+        <tbody class="type-group">
+            <tr>
+                <td class="test-type" rowspan="3">Performance</td>
+                <td class="platform-label">hthor</td>
+                <td><span class="bullet-green">&#9679;</span> -2.1% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> -1.5% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> -3.2% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> -0.9% vs baseline</td>
+                <td><span class="bullet-red">&#9679;</span> +12.5% vs baseline</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Thor</td>
+                <td><span class="bullet-green">&#9679;</span> +1.3% vs baseline</td>
+                <td><span class="bullet-yellow">&#9679;</span> +4.2% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> -1.8% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> +2.1% vs baseline</td>
+                <td><span class="bullet-yellow">&#9679;</span> +5.7% vs baseline</td>
+            </tr>
+            <tr>
+                <td class="platform-label">Roxie</td>
+                <td><span class="bullet-green">&#9679;</span> -0.8% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> +0.5% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> -2.4% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> +0.3% vs baseline</td>
+                <td><span class="bullet-green">&#9679;</span> +1.2% vs baseline</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
