@@ -31,7 +31,10 @@ def get_regress_summary():
                         bullet = "bullet-yellow"
                     else:
                         bullet = "bullet-red"
-                    summary[suite] = f'<span class="{bullet}">&#9679;</span> {p}/{total} ({percent}%)'
+                    summary[suite] = {
+                        "result": f'{p}/{total} ({percent}%)',
+                        "bullet": bullet
+                    }
                 else:
                     summary[suite] = "--"
             else:
@@ -63,12 +66,13 @@ def update_dashtests(summary):
                 except ValueError:
                     print(f"Version column '{version_col}' not found.")
                     continue
-                # Update cell with bullet and result
                 cells[col_idx].clear()
-                if summary[suite] == "--":
+                if summary[suite] == "--" or not summary[suite]:
                     cells[col_idx].string = "--"
                 else:
-                    cells[col_idx].append(BeautifulSoup(summary[suite], "html.parser"))
+                    bullet_html = f'<span class="{summary[suite]["bullet"]}">&#9679;</span> '
+                    result_html = summary[suite]["result"]
+                    cells[col_idx].append(BeautifulSoup(bullet_html + result_html, "html.parser"))
                 break
     # Save updated file
     with open(dashtests_path, "w", encoding="utf-8") as f:
