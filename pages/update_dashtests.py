@@ -22,7 +22,16 @@ def get_regress_summary():
                     f = int(failure.text.split(":")[1].strip())
                     total = p + f
                     percent = round(100 * p / total, 1) if total else 0
-                    summary[suite] = f"{p}/{total} ({percent}%)"
+                    # Determine bullet color
+                    if total == 0:
+                        bullet = "bullet-red"
+                    elif p == total:
+                        bullet = "bullet-green"
+                    elif p >= 0.7 * total:
+                        bullet = "bullet-yellow"
+                    else:
+                        bullet = "bullet-red"
+                    summary[suite] = f'<span class="{bullet}">&#9679;</span> {p}/{total} ({percent}%)'
                 else:
                     summary[suite] = "--"
             else:
@@ -40,20 +49,27 @@ def update_dashtests(summary):
     if not bvt_section:
         print("BVT section not found.")
         return
+    # Find all rows in BVT section
+    bvt_rows = bvt_section.find_parent("tbody").find_all("tr")
     for platform, suite in [("hthor", "hthor"), ("Thor", "thor"), ("Roxie", "roxie-workunit")]:
-        row = bvt_section.find_parent("tr").find_next_sibling("tr") if platform != "hthor" else bvt_section.find_parent("tr")
-        if row:
-            cells = row.find_all("td")
-            # Find the correct column index for version_col
-            header_row = soup.find("table").find("tr")
-            headers = [th.text.strip() for th in header_row.find_all("th")]
-            try:
-                col_idx = headers.index(version_col)
-            except ValueError:
-                print(f"Version column '{version_col}' not found.")
-                continue
-            # Update cell
-            cells[col_idx].string = summary[suite]
+        for row in bvt_rows:
+            platform_cell = row.find_all("td")[1] if len(row.find_all("td")) > 1 else None
+            if platform_cell and platform_cell.text.strip().lower() == platform.lower():
+                cells = row.find_all("td")
+                header_row = soup.find("table").find("tr")
+                headers = [th.text.strip() for th in header_row.find_all("th")]
+                try:
+                    col_idx = headers.index(version_col)
+                except ValueError:
+                    print(f"Version column '{version_col}' not found.")
+                    continue
+                # Update cell with bullet and result
+                cells[col_idx].clear()
+                if summary[suite] == "--":
+                    cells[col_idx].string = "--"
+                else:
+                    cells[col_idx].append(BeautifulSoup(summary[suite], "html.parser"))
+                break
     # Save updated file
     with open(dashtests_path, "w", encoding="utf-8") as f:
         f.write(str(soup))
