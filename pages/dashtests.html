@@ -22,16 +22,21 @@
         }
         /* test type group shading */
         .type-group {
-            background-color: #e7f7fb;
+            background-color: #f9fafc;
         }
         .type-group:nth-of-type(odd) {
-            background-color: #f3f3f3;
+            background-color: #e7f7fb;
         }
         .test-type {
             font-weight: bold;
             font-size: 1.15em;
             text-align: left;
-            background: #ddebf7 !important;
+        }
+        .type-group:nth-of-type(odd) .test-type {
+            background: #b7cbe6 !important;
+        }
+        .type-group:nth-of-type(even) .test-type {
+            background: #d1d5db !important;
         }
         .platform-label { font-style: italic; background: #fafafa; }
         /* colored bullets */
@@ -41,7 +46,6 @@
     </style>
 </head>
 <body>
-<h2 style="text-align:center;">HPCC Platform Test Results</h2>
 <table class="test-table">
 <tr>
 <th>Test Type</th>
@@ -55,70 +59,56 @@
 <!-- REGRESSION -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="3">Regression</td>
+<td class="test-type" rowspan="3">Regression Suite</td>
 <td class="platform-label">hthor</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
 <td><span class="bullet-green">●</span> 1091/1091 (100%)</td>
 <td><span class="bullet-green">●</span> 1091/1091 (100%)</td>
+<td><span class="bullet-green">●</span> 1091/1091 (100%)</td>
+<td><span class="bullet-green">●</span> 1130/1130 (100%)</td>
+<td><span class="bullet-green">●</span> 1130/1130 (100%)</td>
 </tr>
 <tr>
 <td class="platform-label">Thor</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
 <td><span class="bullet-green">●</span> 957/957 (100%)</td>
-<td><span class="bullet-red">●</span> 951/952 (99.9%)</td>
-<td><span class="bullet-green">●</span> 3/3/0<br><span class="bullet-green">●</span> 5/5/0</td>
-<td><span class="bullet-red">●</span> 990/992 (99.8%)</td>
+<td><span class="bullet-green">●</span> 957/957 (100%)</td>
+<td><span class="bullet-green">●</span> 957/957 (100%)</td>
+<td><span class="bullet-green">●</span> 992/992 (100%)</td>
+<td><span class="bullet-green">●</span> 992/992 (100%)</td>
 </tr>
 <tr>
 <td class="platform-label">Roxie</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
-<td><span class="bullet-green">●</span> 1176/1176 (100%)</td>
-<td><span class="bullet-green">●</span> 3224/3224 (100%)</td>
 <td><span class="bullet-green">●</span> 1176/1176 (100%)</td>
 <td><span class="bullet-green">●</span> 1176/1176 (100%)</td>
-</tr>
-</tbody>
-<!-- OBT -->
-<!-- BUILD TESTS -->
-<tbody class="type-group">
-<tr>
-<td class="test-type">Overnight Build Tests</td>
-<td class="platform-label"></td>
-<td><span class="bullet-yellow">●</span> +5.7% vs baseline</td>
-<td><span class="bullet-green">●</span> 2693/2700 (99.7%)</td>
-<td><span class="bullet-yellow">●</span> 2665/2700 (98.7%)</td>
-<td><span class="bullet-green">●</span> 2681/2700 (99.3%)</td>
-<td><span class="bullet-yellow">●</span> 2657/2700 (98.4%)</td>
-</tr>
+<td><span class="bullet-green">●</span> 1176/1176 (100%)</td>
+<td><span class="bullet-green">●</span> 1217/1217 (100%)</td>
+<td><span class="bullet-green">●</span> 1217/1217 (100%)</td>
 </tbody>
 <!-- UNIT TESTS -->
 <tbody class="type-group">
 <tr>
 <td class="test-type" rowspan="3">Unit Tests</td>
 <td class="platform-label">hthor</td>
-<td><span class="bullet-green">●</span> 300/310 (96.8%)</td>
-<td><span class="bullet-green">●</span> 305/310 (98.4%)</td>
-<td><span class="bullet-red">●</span> 990/992 (99.8%)</td>
-<td><span class="bullet-green">●</span> 307/310 (99.0%)</td>
-<td><span class="bullet-yellow">●</span> 290/310 (93.5%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
 </tr>
 <tr>
 <td class="platform-label">Thor</td>
-<td><span class="bullet-green">●</span> 302/310 (97.4%)</td>
-<td><span class="bullet-green">●</span> 306/310 (98.7%)</td>
-<td><span class="bullet-green">●</span> 309/310 (99.7%)</td>
-<td><span class="bullet-green">●</span> 308/310 (99.4%)</td>
-<td><span class="bullet-green">●</span> 295/310 (95.2%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
 </tr>
 <tr>
 <td class="platform-label">Roxie</td>
-<td><span class="bullet-green">●</span> 304/310 (98.1%)</td>
-<td><span class="bullet-green">●</span> 307/310 (99.0%)</td>
-<td><span class="bullet-green">●</span> 310/310 (100%)</td>
-<td><span class="bullet-green">●</span> 309/310 (99.7%)</td>
-<td><span class="bullet-green">●</span> 298/310 (96.1%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 645/645 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
+<td><span class="bullet-green">●</span> 644/644 (100%)</td>
 </tr>
 </tbody>
 
@@ -156,23 +146,23 @@
 <tr>
 <td class="test-type">Coverage</td>
 <td class="platform-label"></td>
-<td><span class="bullet-green">●</span> 82.4% lines</td>
-<td><span class="bullet-green">●</span> 83.7% lines</td>
-<td><span class="bullet-green">●</span> 84.2% lines</td>
-<td><span class="bullet-green">●</span> 85.3% lines</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
 <td><span class="bullet-yellow">●</span> 81.9% lines</td>
 </tr>
 </tbody>
 <!-- PERFORMANCE -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="2">Performance</td>
+<td class="test-type" rowspan="2">Performance Suite</td>
 <td class="platform-label">Bare Metal</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
-<td><span class="bullet-green">●</span> 323/323/0<br><span class="bullet-green">●</span> 350/350/0</td>
+<td><span class="bullet-green">●</span> 323/323/0 (thor)<br><span class="bullet-green">●</span> 350/350/0 (roxie)</td>
 </tr>
 <tr>
 <td class="platform-label">Virtual Machine</td>
@@ -180,7 +170,7 @@
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
-<td><span class="bullet-green">●</span> 323/323/0<br><span class="bullet-green">●</span> 350/350/0</td>
+<td><span class="bullet-green">●</span> 323/323/0 (thor)<br><span class="bullet-green">●</span> 350/350/0 (roxie)</td>
 </tr>
 </tbody>
 </table>
