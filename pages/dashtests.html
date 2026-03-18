@@ -1,49 +1,152 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <title>HPCC Platform Tests</title>
 <style>
-        body { font-family: Arial, sans-serif; }
-        .test-table {
-            margin: 2em auto;
-            border-collapse: collapse;
-            min-width: 900px;
-            max-width: 1100px;
-        }
-        .test-table th, .test-table td {
-            border: 1px solid #ddd;
-            padding: 6px 10px;
-            text-align: center;
-        }
-        .test-table th {
-            background: #f2f2f2;
-        }
-        /* test type group shading */
-        .type-group {
-            background-color: #f9fafc;
-        }
-        .type-group:nth-of-type(odd) {
-            background-color: #e7f7fb;
-        }
-        .test-type {
-            font-weight: bold;
-            font-size: 1.15em;
-            text-align: left;
-        }
-        .type-group:nth-of-type(odd) .test-type {
-            background: #b7cbe6 !important;
-        }
-        .type-group:nth-of-type(even) .test-type {
-            background: #d1d5db !important;
-        }
-        .platform-label { font-style: italic; background: #fafafa; }
-        /* colored bullets */
-        .bullet-green { color: #16831b; font-size: 1.15em; }
-        .bullet-red { color: #d00; font-size: 1.15em; }
-        .bullet-yellow { color: #ffae00; font-size: 1.15em; }
-    </style>
+    body { font-family: Arial, sans-serif; }
+    .test-table {
+        margin: 2em auto;
+        border-collapse: collapse;
+        min-width: 900px;
+        max-width: 1100px;
+    }
+    .test-table th, .test-table td {
+        border: 1px solid #ddd;
+        padding: 6px 10px;
+        text-align: center;
+    }
+    .test-table th {
+        background: #f2f2f2;
+    }
+    .type-group {
+        background-color: #f9fafc;
+    }
+    .type-group:nth-of-type(odd) {
+        background-color: #e7f7fb;
+    }
+    .test-type {
+        font-weight: bold;
+        font-size: 1.15em;
+        text-align: left;
+        position: relative;
+    }
+    .type-group:nth-of-type(odd) .test-type {
+        background: #b7cbe6 !important;
+    }
+    .type-group:nth-of-type(even) .test-type {
+        background: #d1d5db !important;
+    }
+    .platform-label { font-style: italic; background: #fafafa; }
+    .bullet-green { color: #16831b; font-size: 1.15em; }
+    .bullet-red { color: #d00; font-size: 1.15em; }
+    .bullet-yellow { color: #ffae00; font-size: 1.15em; }
+    /* Info icon styling */
+    .info-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 7px;
+        cursor: pointer;
+        position: relative;
+    }
+    .info-icon .tooltip {
+        display: none;
+        position: absolute;
+        left: 22px;
+        top: 0;
+        background: #2186eb;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    .info-icon:hover .tooltip,
+    .info-icon:focus .tooltip {
+        display: block;
+    }
+    .info-icon:focus {
+        outline: 2px solid #2186eb;
+    }
+</style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>HPCC Platform Tests</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .test-table {
+        margin: 2em auto;
+        border-collapse: collapse;
+        min-width: 900px;
+        max-width: 1100px;
+    }
+    .test-table th, .test-table td {
+        border: 1px solid #ddd;
+        padding: 6px 10px;
+        text-align: center;
+    }
+    .test-table th {
+        background: #f2f2f2;
+    }
+    .type-group {
+        background-color: #f9fafc;
+    }
+    .type-group:nth-of-type(odd) {
+        background-color: #e7f7fb;
+    }
+    .test-type {
+        font-weight: bold;
+        font-size: 1.15em;
+        text-align: left;
+        position: relative;
+    }
+    .type-group:nth-of-type(odd) .test-type {
+        background: #b7cbe6 !important;
+    }
+    .type-group:nth-of-type(even) .test-type {
+        background: #d1d5db !important;
+    }
+    .platform-label { font-style: italic; background: #fafafa; }
+    .bullet-green { color: #16831b; font-size: 1.15em; }
+    .bullet-red { color: #d00; font-size: 1.15em; }
+    .bullet-yellow { color: #ffae00; font-size: 1.15em; }
+    /* Info icon styling (as link) */
+    .info-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 7px;
+        cursor: pointer;
+        position: relative;
+        text-decoration: none;
+    }
+    .info-icon .tooltip {
+        display: none;
+        position: absolute;
+        left: 22px;
+        top: 0;
+        background: #2186eb;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    .info-icon:hover .tooltip,
+    .info-icon:focus .tooltip {
+        display: block;
+    }
+    .info-icon:focus {
+        outline: 2px solid #2186eb;
+    }
+</style>
 </head>
 <body>
 <table class="test-table">
@@ -59,7 +162,18 @@
 <!-- REGRESSION -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="3">Regression Suite</td>
+<td class="test-type" rowspan="3">
+    Regression Suite
+    <a class="info-icon" href="http://172.190.97.122/OBT/digest.html" target="_blank" tabindex="0" aria-label="More info about Regression Suite">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-labelledby="infoIconRegression">
+          <title id="infoIconRegression">More info</title>
+          <circle cx="8" cy="8" r="8" fill="#2186eb"/>
+          <text x="8" y="11" text-anchor="middle" font-size="10" fill="#fff"
+            font-family="Arial" font-weight="bold">i</text>
+        </svg>
+        <span class="tooltip">Checks for regressions in core functionality across platform versions. Click for digest.</span>
+    </a>
+</td>
 <td class="platform-label">hthor</td>
 <td><span class="bullet-green">●</span> 1091/1091 (100%)</td>
 <td><span class="bullet-green">●</span> 1091/1091 (100%)</td>
@@ -82,11 +196,23 @@
 <td><span class="bullet-green">●</span> 1176/1176 (100%)</td>
 <td><span class="bullet-green">●</span> 1217/1217 (100%)</td>
 <td><span class="bullet-green">●</span> 1217/1217 (100%)</td>
+</tr>
 </tbody>
 <!-- UNIT TESTS -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="3">Unit Tests</td>
+<td class="test-type" rowspan="3">
+    Unit Tests
+    <a class="info-icon" href="http://172.190.97.122/OBT/digest.html" target="_blank" tabindex="0" aria-label="More info about Unit Tests">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-labelledby="infoIconUnit">
+            <title id="infoIconUnit">More info</title>
+            <circle cx="8" cy="8" r="8" fill="#2186eb"/>
+            <text x="8" y="11" text-anchor="middle" font-size="10" fill="#fff"
+              font-family="Arial" font-weight="bold">i</text>
+        </svg>
+        <span class="tooltip">Tests smallest units of code for correctness. Click for digest.</span>
+    </a>
+</td>
 <td class="platform-label">hthor</td>
 <td><span class="bullet-green">●</span> 645/645 (100%)</td>
 <td><span class="bullet-green">●</span> 645/645 (100%)</td>
@@ -112,11 +238,21 @@
 </tr>
 </tbody>
 
-
 <!-- BVT -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="3">BVT</td>
+<td class="test-type" rowspan="3">
+    BVT
+    <a class="info-icon" href="#" target="_blank" tabindex="0" aria-label="More info about Basic Verification Testing">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-labelledby="infoIconBVT">
+            <title id="infoIconBVT">More info</title>
+            <circle cx="8" cy="8" r="8" fill="#2186eb"/>
+            <text x="8" y="11" text-anchor="middle" font-size="10" fill="#fff"
+              font-family="Arial" font-weight="bold">i</text>
+        </svg>
+        <span class="tooltip">Basic Verification Testing - validates key platform features post-build.</span>
+    </a>
+</td>
 <td class="platform-label">hthor</td>
 <td><span class="bullet-green">●</span> 156/160 (97.5%)</td>
 <td><span class="bullet-green">●</span> 160/160 (100%)</td>
@@ -144,7 +280,18 @@
 <!-- COVERAGE -->
 <tbody class="type-group">
 <tr>
-<td class="test-type">Coverage</td>
+<td class="test-type">
+    Coverage
+    <a class="info-icon" href="http://172.190.97.122/coverage/hpcc_coverage-latest/" target="_blank" tabindex="0" aria-label="More info about Coverage tests">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-labelledby="infoIconCoverage">
+            <title id="infoIconCoverage">More info</title>
+            <circle cx="8" cy="8" r="8" fill="#2186eb"/>
+            <text x="8" y="11" text-anchor="middle" font-size="10" fill="#fff"
+              font-family="Arial" font-weight="bold">i</text>
+        </svg>
+        <span class="tooltip">Code coverage rates for test suites. Click for full report.</span>
+    </a>
+</td>
 <td class="platform-label"></td>
 <td>N/A</td>
 <td>N/A</td>
@@ -156,7 +303,18 @@
 <!-- PERFORMANCE -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="2">Performance Suite</td>
+<td class="test-type" rowspan="2">
+    Performance Suite
+    <a class="info-icon" href="#" target="_blank" tabindex="0" aria-label="More info about Performance Suite">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-labelledby="infoIconPerf">
+            <title id="infoIconPerf">More info</title>
+            <circle cx="8" cy="8" r="8" fill="#2186eb"/>
+            <text x="8" y="11" text-anchor="middle" font-size="10" fill="#fff"
+              font-family="Arial" font-weight="bold">i</text>
+        </svg>
+        <span class="tooltip">Platform and environment performance benchmarking.</span>
+    </a>
+</td>
 <td class="platform-label">Bare Metal</td>
 <td>N/A</td>
 <td>N/A</td>
