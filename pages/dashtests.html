@@ -41,82 +41,6 @@
     .bullet-green { color: #16831b; font-size: 1.15em; }
     .bullet-red { color: #d00; font-size: 1.15em; }
     .bullet-yellow { color: #ffae00; font-size: 1.15em; }
-    /* Info icon styling */
-    .info-icon {
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 7px;
-        cursor: pointer;
-        position: relative;
-    }
-    .info-icon .tooltip {
-        display: none;
-        position: absolute;
-        left: 22px;
-        top: 0;
-        background: #2186eb;
-        color: #fff;
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 0.9em;
-        white-space: nowrap;
-        z-index: 100;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-    }
-    .info-icon:hover .tooltip,
-    .info-icon:focus .tooltip {
-        display: block;
-    }
-    .info-icon:focus {
-        outline: 2px solid #2186eb;
-    }
-</style>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<title>HPCC Platform Tests</title>
-<style>
-    body { font-family: Arial, sans-serif; }
-    .test-table {
-        margin: 2em auto;
-        border-collapse: collapse;
-        min-width: 900px;
-        max-width: 1100px;
-    }
-    .test-table th, .test-table td {
-        border: 1px solid #ddd;
-        padding: 6px 10px;
-        text-align: center;
-    }
-    .test-table th {
-        background: #f2f2f2;
-    }
-    .type-group {
-        background-color: #f9fafc;
-    }
-    .type-group:nth-of-type(odd) {
-        background-color: #e7f7fb;
-    }
-    .test-type {
-        font-weight: bold;
-        font-size: 1.15em;
-        text-align: left;
-        position: relative;
-    }
-    .type-group:nth-of-type(odd) .test-type {
-        background: #b7cbe6 !important;
-    }
-    .type-group:nth-of-type(even) .test-type {
-        background: #d1d5db !important;
-    }
-    .platform-label { font-style: italic; background: #fafafa; }
-    .bullet-green { color: #16831b; font-size: 1.15em; }
-    .bullet-red { color: #d00; font-size: 1.15em; }
-    .bullet-yellow { color: #ffae00; font-size: 1.15em; }
-    /* Info icon styling (as link) */
     .info-icon {
         display: inline-block;
         vertical-align: middle;
@@ -145,6 +69,13 @@
     }
     .info-icon:focus {
         outline: 2px solid #2186eb;
+    }
+    /* BVT group unique styling */
+    .bvt-group {
+        background-color: #f3e5f5 !important;
+    }
+    .bvt-group .test-type {
+        background: #ce93d8 !important;
     }
 </style>
 </head>
@@ -237,9 +168,8 @@
 <td><span class="bullet-green">●</span> 644/644 (100%)</td>
 </tr>
 </tbody>
-
 <!-- BVT -->
-<tbody class="type-group">
+<tbody class="type-group bvt-group">
 <tr>
 <td class="test-type" rowspan="3">
     BVT
@@ -254,26 +184,26 @@
     </a>
 </td>
 <td class="platform-label">hthor</td>
-<td><span class="bullet-green">●</span> 156/160 (97.5%)</td>
+<td><span class="bullet-green">●</span> 129/129 (100%)</td>
 <td><span class="bullet-green">●</span> 160/160 (100%)</td>
 <td><span class="bullet-green">●</span> 158/160 (98.8%)</td>
-<td><span class="bullet-red">●</span> 10/20 (50.0%)</td>
+<td><span class="bullet-green">●</span> 129/129 (100%)</td>
 <td><span class="bullet-green">●</span> 155/160 (96.9%)</td>
 </tr>
 <tr>
 <td class="platform-label">Thor</td>
-<td><span class="bullet-green">●</span> 158/160 (98.8%)</td>
+<td><span class="bullet-green">●</span> 42/42 (100%)</td>
 <td><span class="bullet-green">●</span> 159/160 (99.4%)</td>
 <td><span class="bullet-green">●</span> 157/160 (98.1%)</td>
-<td><span class="bullet-green">●</span> 156/160 (97.5%)</td>
+<td><span class="bullet-green">●</span> 42/42 (100%)</td>
 <td><span class="bullet-red">●</span> 5/15 (33.3%)</td>
 </tr>
 <tr>
 <td class="platform-label">Roxie</td>
-<td><span class="bullet-green">●</span> 159/160 (99.4%)</td>
+<td><span class="bullet-green">●</span> 9/9 (100%)</td>
 <td><span class="bullet-green">●</span> 160/160 (100%)</td>
 <td><span class="bullet-green">●</span> 159/160 (99.4%)</td>
-<td><span class="bullet-green">●</span> 158/160 (98.8%)</td>
+<td><span class="bullet-green">●</span> 9/9 (100%)</td>
 <td><span class="bullet-green">●</span> 159/160 (99.4%)</td>
 </tr>
 </tbody>
