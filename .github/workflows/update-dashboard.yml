@@ -1,0 +1,26 @@
+name: Update Dashboard Summary
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - run: pip install requests
+      - name: Fetch latest summary
+        run: python pages/fetch_summary.py
+      - name: Update dashboard
+        run: python pages/update_dashtests_from_summary.py
+      - name: Commit and push changes
+        run: |
+          git config user.email "bot@github.com"
+          git config user.name "Dashboard Bot"
+          git add pages/summary.html pages/dashtests.html
+          git commit -m "Auto-update: Dashboard summary $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)" || echo "No changes"
+          git push
+
