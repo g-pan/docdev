@@ -17,6 +17,8 @@ jobs:
       - name: Update dashboard
         run: python pages/update_dashtests_from_summary.py
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.DASHTESTS_AUTO }}
         run: |
           git config user.email "bot@github.com"
           git config user.name "Dashboard Bot"
