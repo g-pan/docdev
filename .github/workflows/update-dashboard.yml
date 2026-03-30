@@ -22,5 +22,5 @@ jobs:
           git config user.name "Dashboard Bot"
           git add pages/summary.html pages/dashtests.html
           git commit -m "Auto-update: Dashboard summary $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)" || echo "No changes"
-          git push
+          git push https://x-access-token:${{ secrets.DASHTESTS_AUTO }}@github.com/g-pan/docdev.git main
 
