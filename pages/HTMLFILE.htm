@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPCC Systems Platform Testing Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            max-height: 600px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #764ba2;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #667eea;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .dashboard-banner {
+            background: linear-gradient(135deg, #d946ef 0%, #667eea 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            display: block;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
+        }
+
+        .dashboard-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(217, 70, 239, 0.4);
+        }
+
+        .dashboard-banner .banner-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 120px;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-banner .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-banner .desc {
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        .status-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .description {
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .link-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            padding: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 18px rgba(102, 126, 234, 0.4);
+        }
+
+        .link-card .icon {
+            font-size: 0.75rem;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .link-card .title {
+            font-size: 0.6rem;
+            font-weight: 200;
+            margin-bottom: 1px;
+        }
+
+        .link-card .desc {
+            font-size: 0.65rem;
+            opacity: 0.9;
+            line-height: 1.2;
+        }
+
+        .footer {
+            text-align: center;
+            color: #718096;
+            font-size: 0.75rem;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            margin: 2px 0;
+        }
+
+        @media (max-width: 640px) {
+            .links {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .container {
+                padding: 25px;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>HPCC Systems Platform</h1>
+            <div class="subtitle">Daily & Nightly Testing Dashboard</div>
+        </div>
+
+        <!-- Dashboard Banner (full width) -->
+        <a href="pages/dashtests.html" class="dashboard-banner">
+            <img src="PltTestBan.png" alt="Dashboard" class="banner-image">
+            <div class="title">Testing Dashboard</div>
+            <div class="desc">View current test results and metrics</div>
+        </a>
+
+        <!-- Status Badge (centered, full width) -->
+        <div class="status-section">
+            <span class="status-badge">🔄 Updated Nightly</span>
+        </div>
+
+        <!-- Description (full width) -->
+        <div class="description">
+            This dashboard consolidates test results from multiple daily and overnight system test suites, providing comprehensive quality metrics and test outcomes at a glance with direct links [...]
+        </div>
+
+        <!-- Links Grid (2x2) -->
+        <div class="links">
+            <a href="#" class="link-card">
+                <span class="icon">🔗</span>
+                <div class="title">Official Testing Site</div>
+                <div class="desc">Access detailed test reports</div>
+            </a>
+
+            <a href="https://reedelsevier.sharepoint.com/sites/HPCCSystemsPlatform" class="link-card">
+                <span class="icon">🏠</span>
+                <div class="title">Platform Home</div>
+                <div class="desc">HPCC Systems SharePoint</div>
+            </a>
+
+            <a href="#" class="link-card">
+                <span class="icon">🐛</span>
+                <div class="title">Report an Issue</div>
+                <div class="desc">Submit bug reports or feedback</div>
+            </a>
+
+            <a href="https://github.com/risk-hsy/docdev" class="link-card">
+                <span class="icon">⚙️</span>
+                <div class="title">GitHub Repository</div>
+                <div class="desc">View source code and documentation</div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>HPCC Systems Platform Testing</strong></p>
+            <p>Automated test aggregation and reporting • Updated daily at 2:00 AM EST</p>
+        </div>
+    </div>
+</body>
+</html>
