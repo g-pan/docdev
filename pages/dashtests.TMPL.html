@@ -27,10 +27,12 @@
         background-color: #e7f7fb;
     }
     .test-type {
-           font-weight: bold;
-           font-size: 1em;
+        font-weight: bold;
+        font-size: 1em;
         text-align: left;
         position: relative;
+        margin: 1em auto;
+        max-width: 1100px;
     }
     .type-group:nth-of-type(odd) .test-type {
         background: #b7cbe6 !important;
@@ -71,7 +73,6 @@
     .info-icon:focus {
         outline: 2px solid #2186eb;
     }
-    /* BVT group unique styling */
     .bvt-group {
         background-color: #f3e5f5 !important;
     }
@@ -82,17 +83,6 @@
 </head>
 <body>
 <table class="test-table">
-<tr>
-<th>Test Type</th>
-<th>Environment</th>
-<th>Engine</th>
-<th>9.10.x</th>
-<th>9.12.x</th>
-<th>9.14.x</th>
-<th>10.0.x</th>
-<th>10.2.x</th>
-<th>master</th>
-</tr>
 <!-- REGRESSION -->
 <tbody class="type-group">
 <tr>
@@ -107,38 +97,12 @@
 <span class="tooltip">Tests for regressions in core functionality across platform versions. Click for the complete OBT report digest.</span>
 </a>
 </td>
-<td class="platform-label" rowspan="3">BM/VM</td>
-<td>hThor</td>
-<td><span class="bullet-green">●</span> 1036/1036 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1041/1041 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1106/1106 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1123/1123 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1129/1129 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1129/1129 (100.0%)</td>
-</tr>
-<tr>
-<td>Thor</td>
-<td><span class="bullet-green">●</span> 917/917 (100.0%)</td>
-<td><span class="bullet-green">●</span> 924/924 (100.0%)</td>
-<td><span class="bullet-green">●</span> 973/973 (100.0%)</td>
-<td><span class="bullet-green">●</span> 990/990 (100.0%)</td>
-<td><span class="bullet-green">●</span> 995/995 (100.0%)</td>
-<td><span class="bullet-green">●</span> 995/995 (100.0%)</td>
-</tr>
-<tr>
-<td>Roxie</td>
-<td><span class="bullet-green">●</span> 1128/1128 (100.0%)</td>
-<td><span class="bullet-yellow">●</span> 1130/1133 (99.7%)</td>
-<td><span class="bullet-green">●</span> 1192/1192 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1209/1209 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1214/1214 (100.0%)</td>
-<td><span class="bullet-green">●</span> 1214/1214 (100.0%)</td>
 </tr>
 </tbody>
 <!-- UNIT TESTS -->
 <tbody class="type-group">
 <tr>
-<td class="test-type" rowspan="3">
+<td class="test-type" rowspan="1">
     Overnight <br/>Unit Tests
     <a aria-label="More info about the Overnight Unit Tests" class="info-icon" href="https://reedelsevier.sharepoint.com/sites/HPCCPlatformTesting/SitePages/Platform-Test-Reports1.aspx?source=SiteSettings#obt-runs-against-these-versions" tabindex="0" target="_blank">
 <svg aria-labelledby="infoIconUnit" height="16" viewbox="0 0 16 16" width="16">
@@ -149,14 +113,6 @@
 <span class="tooltip">Overnight Unit Tests. Click for the complete OBT report digest.</span>
 </a>
 </td>
-<td class="platform-label">BM/VM</td>
-<td>N/A</td>
-<td><span class="bullet-green">●</span> 420/420 (100.0%)</td>
-<td><span class="bullet-green">●</span> 481/481 (100.0%)</td>
-<td><span class="bullet-green">●</span> 553/553 (100.0%)</td>
-<td><span class="bullet-green">●</span> 595/595 (100.0%)</td>
-<td><span class="bullet-green">●</span> 629/629 (100.0%)</td>
-<td><span class="bullet-yellow">●</span> 670/671 (99.9%)</td>
 </tr>
 </tbody>
 <!-- PERFORMANCE -->
@@ -173,32 +129,12 @@
 <span class="tooltip">Platform and environment performance tests. Click for the complete OvernightPerformance suite report.</span>
 </a>
 </td>
-<td class="platform-label" rowspan="2">BM</td>
-<td>thor</td>
-<td colspan="5">N/A</td>
-<td><span class="bullet-yellow">●</span> 322/323 (99.7%)</td>
-</tr>
-<tr>
-<td>roxie</td>
-<td colspan="5">N/A</td>
-<td><span class="bullet-green">●</span> 350/350 (100.0%)</td>
-</tr>
-<tr>
-<td class="platform-label" rowspan="2">VM</td>
-<td>thor</td>
-<td colspan="5">N/A</td>
-<td><span class="bullet-green">●</span> 323/323 (100.0%)</td>
-</tr>
-<tr>
-<td>roxie</td>
-<td colspan="5">N/A</td>
-<td><span class="bullet-green">●</span> 350/350 (100.0%)</td>
 </tr>
 </tbody>
 <!-- COVERAGE -->
 <tbody class="type-group">
 <tr>
-<td class="test-type">
+<td class="test-type" rowspan="4">
     Coverage
     <a aria-label="More info about Coverage tests" class="info-icon" href="https://reedelsevier.sharepoint.com/sites/HPCCPlatformTesting/SitePages/Platform-Test-Reports1.aspx?source=SiteSettings#coverage-tests" tabindex="0" target="_blank">
 <svg aria-labelledby="infoIconCoverage" height="16" viewbox="0 0 16 16" width="16">
@@ -209,14 +145,6 @@
 <span class="tooltip">Code coverage rates for test suites. Click for full report.</span>
 </a>
 </td>
-<td></td>
-<td></td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td><span class="bullet-red">●</span> 41.5% lines</td>
 </tr>
 </tbody>
 <!-- BVT -->
@@ -233,41 +161,6 @@
 <span class="tooltip">Build Verification Testing - validates key platform features post-build. Click for the complete BVT report.</span>
 </a>
 </td>
-<td class="platform-label" rowspan="4">BM/VM</td>
-<td class="platform-label">hthor</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td><span class="bullet-green">●</span> 129/129 (100%)</td>
-<td>N/A</td>
-<td>N/A</td>
-</tr>
-<tr>
-<td class="platform-label">Thor</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td><span class="bullet-green">●</span> 42/42 (100%)</td>
-<td>N/A</td>
-<td>N/A</td>
-</tr>
-<tr>
-<td class="platform-label">Roxie</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td><span class="bullet-green">●</span> 9/9 (100%)</td>
-<td>N/A</td>
-<td>N/A</td>
-</tr>
-<tr>
-<td class="platform-label">Regressions</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>N/A</td>
-<td><span class="bullet-green">●</span> 129/129 (100%)</td>
-<td>N/A</td>
-<td>N/A</td>
 </tr>
 </tbody>
 </table>

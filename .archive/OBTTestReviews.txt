@@ -1,0 +1,19 @@
+First row/section:
+name: "Regression Suite"
+data: come from the last column of the first row of each branches in digest.html file table (except the master, where it is the second row.)
+sub-rows: hthor, thor and roxie.
+ 
+Second row/section:
+name "Unit tests"
+data: come from the 6th column of the first row of each branches in digest.html file table (except the master, where it is the second row.)
+sub-rows: none (unit tests are not engine based).
+ 
+Third row/section:
+name "BVT???" (Ask ming)
+data: (Aks Ming)
+sub-rows: (Ask Ming)
+ 
+Fourth row/Section:
+name: "Coverage"
+data: only master
+sub rows: no engines, but you can add lines, branches and function coverage info from the first page header.
