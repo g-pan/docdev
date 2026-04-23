@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DASHTESTS_AUTO }}
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
@@ -17,8 +19,6 @@ jobs:
       - name: Update dashboard
         run: python pages/update_dashtests_from_summary.py
       - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.DASHTESTS_AUTO }}
         run: |
           git config user.email "bot@github.com"
           git config user.name "Dashboard Bot"
