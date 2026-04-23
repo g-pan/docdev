@@ -22,7 +22,7 @@ jobs:
         run: |
           git config user.email "bot@github.com"
           git config user.name "Dashboard Bot"
-          git add pages/summary.html pages/dashtests.html
+          git add pages/summary.html pages/dashtests.html pages/dashtest2.html
           git commit -m "Auto-update: Dashboard summary $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)" || echo "No changes"
           git push
 

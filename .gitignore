@@ -6,9 +6,6 @@ pyvenv.cfg
 # Logs
 logs/
 
-# Archive folder (developmental/test files)
-.archive/
-
 # macOS
 .DS_Store
 
