@@ -48,7 +48,31 @@ def sanitize_cell_html(value: str) -> str:
     value = value.strip() or "N/A"
     if "<a" in value.lower() and "</a>" not in value.lower():
         value += "</a>"
+    # Replace relative links with absolute FQDN links
+    value = replace_relative_links(value)
     return value
+
+
+def replace_relative_links(html: str) -> str:
+    """Replace relative links like ./digest.html with absolute FQDN."""
+    base_url = "http://172.190.97.122/OBT/"
+    # Match href="./filename.html..." and replace with absolute URL
+    def replace_href(match):
+        href = match.group(1)
+        if href.startswith("./"):
+            # Remove ./ and prepend base URL
+            href = base_url + href[2:]
+        elif href.startswith("/"):
+            # Already absolute path, use base URL without /
+            href = base_url.rstrip("/") + href
+        elif not href.startswith("http"):
+            # Relative without ./, prepend base URL
+            href = base_url + href
+        return f'href="{href}"'
+    
+    # Replace href attributes in anchor tags
+    html = re.sub(r'href="([^"]*)"', replace_href, html, flags=re.IGNORECASE)
+    return html
 
 
 def parse_colspan(td_attrs: str) -> int:
