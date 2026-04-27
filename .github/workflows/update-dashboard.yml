@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DASHTESTS_AUTO }}
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
@@ -17,12 +19,10 @@ jobs:
       - name: Update dashboard
         run: python pages/update_dashtests_from_summary.py
       - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.DASHTESTS_AUTO }}
         run: |
           git config user.email "bot@github.com"
           git config user.name "Dashboard Bot"
-          git add pages/summary.html pages/dashtests.html
+          git add pages/summary.html pages/dashtests.html pages/dashtest2.html
           git commit -m "Auto-update: Dashboard summary $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)" || echo "No changes"
           git push
 

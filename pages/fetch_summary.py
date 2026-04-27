@@ -1,19 +1,21 @@
+from pathlib import Path
+
 import requests
 
-# URL to fetch the summary
-url = 'http://172.190.97.122/OBT/summary.html'
+SOURCE_URL = "http://172.190.97.122/OBT/summary.html"
+OUTPUT_PATH = Path(__file__).resolve().parent / "summary.html"
 
-# Destination file path
-file_path = 'summary.html'
 
-# Fetch the summary
-response = requests.get(url)
+def main() -> None:
+    try:
+        response = requests.get(SOURCE_URL, timeout=30)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        raise SystemExit(f"Failed to download summary from {SOURCE_URL}: {exc}") from exc
 
-# Check if the request was successful
-if response.status_code == 200:
-    # Write the content to the file
-    with open(file_path, 'w') as file:
-        file.write(response.text)
-    print('Summary downloaded successfully.')
-else:
-    print('Failed to download summary:', response.status_code)
+    OUTPUT_PATH.write_text(response.text, encoding="utf-8", newline="\n")
+    print(f"Summary downloaded successfully to {OUTPUT_PATH}")
+
+
+if __name__ == "__main__":
+    main()

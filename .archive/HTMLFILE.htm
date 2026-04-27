@@ -13,19 +13,22 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
             background: white;
-            border-radius: 0;
-            box-shadow: none;
-            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            max-height: 600px;
             width: 100%;
             padding: 30px;
-            margin: 0 auto;
         }
 
         .header {
@@ -57,7 +60,6 @@
             margin-bottom: 20px;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
-            width: 100%;
         }
 
         .dashboard-banner:hover {
@@ -68,7 +70,7 @@
         .dashboard-banner .banner-image {
             max-width: 100%;
             height: auto;
-            max-height: 150px;
+            max-height: 120px;
             margin-bottom: 8px;
         }
 
@@ -170,7 +172,7 @@
 
             .container {
                 padding: 25px;
-                max-width: 100%;
+                max-height: none;
             }
         }
     </style>
@@ -185,7 +187,7 @@
 
         <!-- Dashboard Banner (full width) -->
         <a href="pages/dashtests.html" class="dashboard-banner">
-            <img src="pages/PltTestBan.png" alt="Dashboard" class="banner-image">
+            <img src="PltTestBan.png" alt="Dashboard" class="banner-image">
             <div class="title">Testing Dashboard</div>
             <div class="desc">View current test results and metrics</div>
         </a>

@@ -1,0 +1,40 @@
+Extract of BVT Data - Flow
+Here’s a high-level flow to automate this process:
+
+Run Tests in GitHub Actions
+
+Your workflow runs the test suite for each build.
+The tests generate a new regress_quick.html report as an artifact.
+Extract Summary Data
+
+After the report is generated, use a script (Python is ideal) to parse regress_quick.html.
+Extract the summary data for hthor, thor, and roxie (passing, failing, total).
+Update dashtests.html
+
+The script locates the BVT section in dashtests.html.
+For each platform (hthor, thor, roxie) and the current version column:
+If data is found, update the <td> with the format: X/Y (Z%) (e.g., 10/16 (62.5%))
+If missing, insert -- in the <td>.
+Commit and Push
+
+The script saves the updated dashtests.html.
+Optionally, commit and push the change back to the repo or upload as an artifact.
+Example Python Script Steps:
+
+Parse regress_quick.html with BeautifulSoup.
+For each suite summary, extract passing, failing, and calculate total and percent.
+Open dashtests.html, find the BVT section, and update the correct <td> for the current version.
+If a suite is missing, write -- in the cell.
+GitHub Actions Integration:
+
+Add a job step after tests to run this script.
+Use actions/checkout to get the repo, and actions/upload-artifact if you want to save the updated file.
+Summary Table Update Example:
+
+Platform	10.2.x (example)
+hthor	10/15 (66.7%)
+thor	10/16 (62.5%)
+roxie	10/20 (50.0%)
+If missing: --
+
+Would you like a sample Python script for this, or a sample GitHub Actions workflow step?

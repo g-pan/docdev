@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .summary-table {
+            margin: 2em auto;
+            border-collapse: collapse;
+            min-width: 420px;
+            max-width: 600px;
+        }
+        .summary-table th, .summary-table td {
+            border: 1px solid #ddd;
+            padding: 14px 18px;
+            text-align: center;
+        }
+        .summary-table th {
+            background: #f2f2f2;
+        }
+        .metric-trend.positive { color: #16831b; font-weight: bold; }
+        .metric-trend.negative { color: #d00; font-weight: bold; }
+        .metric-trend.neutral { color: #888; }
+    </style>
+</head>
+<body>
+    <table class="summary-table">
+        <tr>
+            <th>Overall Pass Rate</th>
+            <th>Critical Failures</th>
+            <th>Active Versions</th>
+            <th>Last Updated</th>
+        </tr>
+        <tr>
+            <td>94.2% <span class="metric-trend positive">+2.1%</span></td>
+            <td>3 <span class="metric-trend negative">+1</span></td>
+            <td>5 <span class="metric-trend neutral">—</span></td>
+            <td>2h ago <span class="metric-trend neutral">—</span></td>
+        </tr>
+    </table>
+</body>
+</html>
+
