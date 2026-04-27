@@ -1,109 +1,346 @@
 #!/usr/bin/env python3
 """
-Simple line-by-line update: summary.html -> dashtests.html
-Per-line extraction with correct line numbers
+Generate dashboard pages from pages/summary.html.
+
+Design goals:
+- Treat summary.html as the source of truth for timestamp, headers, and data cells.
+- Use dashtests.TMPL.html only for page shell and first-column test labels/info links.
+- Generate dashtests.html without the Performance suite section.
+- Generate dashtest2.html from the parsed Performance rows.
+
+This intentionally avoids recalculating bullets or rebuilding formatted values. The
+summary file already provides display-ready cell content.
 """
 
+from __future__ import annotations
+
 import re
+from dataclasses import dataclass
+from html import unescape
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-def extract_value(line):
-    """Extract text content between td tags, handling <br> if present."""
-    line = line.replace('<br>', ' ')
-    match = re.search(r'>([^<]+)<', line)
-    return match.group(1).strip() if match else ""
+SCRIPT_DIR = Path(__file__).resolve().parent
+SUMMARY_PATH = SCRIPT_DIR / "summary.html"
+TEMPLATE_PATH = SCRIPT_DIR / "dashtests.TMPL.html"
+OUTPUT_MAIN_PATH = SCRIPT_DIR / "dashtests.html"
+OUTPUT_PERF_PATH = SCRIPT_DIR / "dashtest2.html"
 
-def get_bullet(value):
-    """Determine bullet color from percentage value."""
-    match = re.search(r'\((\d+\.\d+)%\)', value)
-    if not match:
-        return 'bullet-red'
-    
-    pct = float(match.group(1))
-    return 'bullet-green' if pct == 100.0 else 'bullet-yellow' if pct >= 99.0 else 'bullet-red'
+TD_RE = re.compile(r"<td([^>]*)>(.*?)</td>", re.IGNORECASE | re.DOTALL)
+TH_RE = re.compile(r"<th[^>]*>(.*?)</th>", re.IGNORECASE | re.DOTALL)
 
-def get_bullet_coverage(value):
-    """Coverage has different thresholds."""
-    match = re.search(r'(\d+\.\d+)%', value)
-    if not match:
-        return 'bullet-red'
-    
-    pct = float(match.group(1))
-    return 'bullet-green' if pct >= 80.0 else 'bullet-yellow' if pct >= 60.0 else 'bullet-red'
 
-def main():
-    # Read summary.html
-    with open('pages/summary.html', 'r', encoding='utf-8') as f:
-        summary = f.readlines()
-    
-    # Read dashtests.html
-    with open('pages/dashtests.html', 'r', encoding='utf-8') as f:
-        dash = f.readlines()
-    
-    # Extract from summary.html (0-based indexing, so line 17 = index 16)
-    
-    # REGRESSION - Hthor (lines 17-22, 0-index=16-21)
-    hthor = [extract_value(summary[i]) for i in range(16, 22)]
-    
-    # REGRESSION - Thor (lines 25-30, 0-index=24-29)
-    thor = [extract_value(summary[i]) for i in range(24, 30)]
-    
-    # REGRESSION - Roxie (lines 33-38, 0-index=32-37)
-    roxie = [extract_value(summary[i]) for i in range(32, 38)]
-    
-    # UNIT TESTS (lines 44-49, 0-index=43-48)
-    unit = [extract_value(summary[i]) for i in range(43, 49)]
-    
-    # PERFORMANCE (lines 56, 60, 65, 69, 0-index=55, 59, 64, 68)
-    perf_bm_thor = extract_value(summary[55])
-    perf_bm_roxie = extract_value(summary[59])
-    perf_vm_thor = extract_value(summary[64])
-    perf_vm_roxie = extract_value(summary[68])
-    
-    # COVERAGE - lines (line 80, 0-index=79)
-    coverage = extract_value(summary[79])
-    
-    # Update dashtests.html
-    
-    # REGRESSION - Hthor (lines 112-117, 0-index=111-116)
-    for i, val in enumerate(hthor):
-        bullet = get_bullet(val)
-        dash[111 + i] = f'<td><span class="{bullet}">●</span> {val}</td>\n'
-    
-    # REGRESSION - Thor (lines 121-126, 0-index=120-125)
-    for i, val in enumerate(thor):
-        bullet = get_bullet(val)
-        dash[120 + i] = f'<td><span class="{bullet}">●</span> {val}</td>\n'
-    
-    # REGRESSION - Roxie (lines 130-135, 0-index=129-134)
-    for i, val in enumerate(roxie):
-        bullet = get_bullet(val)
-        dash[129 + i] = f'<td><span class="{bullet}">●</span> {val}</td>\n'
-    
-    # UNIT TESTS (lines 154-159, 0-index=153-158)
-    for i, val in enumerate(unit):
-        bullet = get_bullet(val)
-        dash[153 + i] = f'<td><span class="{bullet}">●</span> {val}</td>\n'
-    
-    # PERFORMANCE - BM thor (line 179, 0-index=178)
-    dash[178] = f'<td><span class="{get_bullet(perf_bm_thor)}">●</span> {perf_bm_thor}</td>\n'
-    
-    # PERFORMANCE - BM roxie (line 184, 0-index=183)
-    dash[183] = f'<td><span class="{get_bullet(perf_bm_roxie)}">●</span> {perf_bm_roxie}</td>\n'
-    
-    # PERFORMANCE - VM thor (line 190, 0-index=189)
-    dash[189] = f'<td><span class="{get_bullet(perf_vm_thor)}">●</span> {perf_vm_thor}</td>\n'
-    
-    # PERFORMANCE - VM roxie (line 195, 0-index=194)
-    dash[194] = f'<td><span class="{get_bullet(perf_vm_roxie)}">●</span> {perf_vm_roxie}</td>\n'
-    
-    # COVERAGE (line 218, 0-index=217)
-    dash[217] = f'<td><span class="{get_bullet_coverage(coverage)}">●</span> {coverage} lines</td>\n'
-    
-    # Write output
-    with open('pages/dashtests.html', 'w', encoding='utf-8') as f:
-        f.writelines(dash)
-    
-    print("✓ dashtests.html updated successfully")
+@dataclass(frozen=True)
+class RowKey:
+    group: str
+    env: str
+    name: str
 
-if __name__ == '__main__':
+
+def strip_tags(value: str) -> str:
+    value = value.replace("<br>", " ").replace("<br/>", " ").replace("<br />", " ")
+    value = re.sub(r"<[^>]+>", "", value)
+    value = re.sub(r"\s+", " ", value)
+    return unescape(value).strip()
+
+
+def sanitize_cell_html(value: str) -> str:
+    value = value.strip() or "N/A"
+    if "<a" in value.lower() and "</a>" not in value.lower():
+        value += "</a>"
+    # Replace relative links with absolute FQDN links
+    value = replace_relative_links(value)
+    return value
+
+
+def replace_relative_links(html: str) -> str:
+    """Replace relative links like ./digest.html with absolute FQDN."""
+    base_url = "http://172.190.97.122/OBT/"
+    # Match href="./filename.html..." and replace with absolute URL
+    def replace_href(match):
+        href = match.group(1)
+        if href.startswith("./"):
+            # Remove ./ and prepend base URL
+            href = base_url + href[2:]
+        elif href.startswith("/"):
+            # Already absolute path, use base URL without /
+            href = base_url.rstrip("/") + href
+        elif not href.startswith("http"):
+            # Relative without ./, prepend base URL
+            href = base_url + href
+        return f'href="{href}"'
+    
+    # Replace href attributes in anchor tags
+    html = re.sub(r'href="([^"]*)"', replace_href, html, flags=re.IGNORECASE)
+    return html
+
+
+def parse_colspan(td_attrs: str) -> int:
+    match = re.search(r"colspan\s*=\s*[\"']?(\d+)", td_attrs, re.IGNORECASE)
+    return int(match.group(1)) if match else 1
+
+
+def preserve_td_attrs(attrs: str) -> str:
+    """Strip layout attrs (colspan, rowspan) but keep presentation attrs (style, align)."""
+    result = re.sub(r"\s*\bcolspan\s*=\s*['\"]?\d+['\"]?", "", attrs, flags=re.IGNORECASE)
+    result = re.sub(r"\s*\browspan\s*=\s*['\"]?\d+['\"]?", "", result, flags=re.IGNORECASE)
+    return (" " + result.strip()) if result.strip() else ""
+
+
+def set_rowspan(td_html: str, rowspan: int) -> str:
+    if re.search(r"\srowspan\s*=\s*['\"]?\d+['\"]?", td_html, flags=re.IGNORECASE):
+        return re.sub(
+            r"\srowspan\s*=\s*['\"]?\d+['\"]?",
+            f' rowspan="{rowspan}"',
+            td_html,
+            flags=re.IGNORECASE,
+        )
+    return re.sub(r"^<td\b", f'<td rowspan="{rowspan}"', td_html, flags=re.IGNORECASE)
+
+
+def normalize_group(text: str) -> str:
+    low = text.strip().lower()
+    if low.startswith("regression"):
+        return "Regression suite"
+    if low.startswith("unit"):
+        return "Unit tests"
+    if low.startswith("performance"):
+        return "Performance suite"
+    if low.startswith("code coverage") or low.startswith("coverage"):
+        return "Code coverage"
+    if low.startswith("build verification") or low == "bvt":
+        return "BVT"
+    return ""
+
+
+def normalize_name(text: str) -> str:
+    low = text.strip().lower()
+    if low == "hthor":
+        return "hThor"
+    if low == "thor":
+        return "Thor"
+    if low == "roxie":
+        return "Roxie"
+    return text.strip()
+
+
+def extract_timestamp(summary_html: str) -> str:
+    match = re.search(r"<h3[^>]*>.*?</h3>", summary_html, flags=re.IGNORECASE | re.DOTALL)
+    return match.group(0).strip() if match else ""
+
+
+def extract_headers(summary_html: str) -> List[str]:
+    headers = [strip_tags(h) for h in TH_RE.findall(summary_html)]
+    if not headers:
+        raise RuntimeError("Could not extract table headers from summary.html")
+    return headers
+
+
+def parse_summary_rows(summary_html: str, version_count: int) -> Tuple[Dict[RowKey, List[str]], List[str]]:
+    rows: Dict[RowKey, List[str]] = {}
+    group_order: List[str] = []
+
+    current_group = ""
+    current_env = ""
+    pending_name = ""
+    pending_values: List[str] = []
+
+    def commit(group: str, env: str, name: str, values: List[str]) -> None:
+        normalized_group = normalize_group(group)
+        if not normalized_group:
+            return
+        key = RowKey(normalized_group, env.strip(), normalize_name(name))
+        rows[key] = values[:version_count]
+        if normalized_group not in group_order:
+            group_order.append(normalized_group)
+
+    for attrs, inner in TD_RE.findall(summary_html):
+        text = strip_tags(inner)
+        normalized_group = normalize_group(text)
+
+        if normalized_group in {
+            "Regression suite",
+            "Unit tests",
+            "Performance suite",
+            "Code coverage",
+            "BVT",
+        }:
+            current_group = normalized_group
+            pending_name = ""
+            pending_values = []
+            continue
+
+        if text in {"BM/VM", "BM", "VM"}:
+            current_env = text
+            pending_name = ""
+            pending_values = []
+            continue
+
+        if not current_group or not current_env:
+            continue
+
+        if not pending_name:
+            pending_name = text
+            pending_values = []
+            continue
+
+        colspan = parse_colspan(attrs)
+        if colspan > 1:
+            # Colspan N/A cells — expand into individual plain cells
+            pending_values.extend(["<td>N/A</td>"] * colspan)
+        else:
+            td_attrs = preserve_td_attrs(attrs)
+            pending_values.append(f"<td{td_attrs}>{sanitize_cell_html(inner)}</td>")
+
+        if len(pending_values) >= version_count:
+            commit(current_group, current_env, pending_name, pending_values)
+            pending_name = ""
+            pending_values = []
+
+    return rows, group_order
+
+
+def extract_template_shell(template_html: str) -> Tuple[str, str]:
+    table_match = re.search(r"<table\b[^>]*>.*?</table>", template_html, flags=re.IGNORECASE | re.DOTALL)
+    if not table_match:
+        raise RuntimeError("Could not find template table in dashtests.TMPL.html")
+    return template_html[: table_match.start()], template_html[table_match.end() :]
+
+
+def extract_template_title_cells(template_html: str) -> Dict[str, str]:
+    markers = {
+        "Regression suite": "REGRESSION",
+        "Unit tests": "UNIT TESTS",
+        "Performance suite": "PERFORMANCE",
+        "Code coverage": "COVERAGE",
+        "BVT": "BVT",
+    }
+
+    title_cells: Dict[str, str] = {}
+    for group, marker in markers.items():
+        pattern = rf"<!--\s*{re.escape(marker)}\s*-->.*?(<td\s+class=\"test-type\"[^>]*>.*?</td>)"
+        match = re.search(pattern, template_html, flags=re.IGNORECASE | re.DOTALL)
+        if match:
+            title_cells[group] = match.group(1)
+
+    return title_cells
+
+
+def fallback_title_cell(group: str) -> str:
+    label = group.replace("suite", "Suite")
+    return f'<td class="test-type">{label}</td>'
+
+
+def build_header_row(headers: List[str]) -> str:
+    return "<tr>" + "".join(f"<th>{header}</th>" for header in headers) + "</tr>\n"
+
+
+def build_group_tbody(
+    group: str,
+    group_rows: List[Tuple[RowKey, List[str]]],
+    title_cell_html: str,
+) -> str:
+    if not group_rows:
+        return ""
+
+    title_cell_html = set_rowspan(title_cell_html, len(group_rows))
+    tbody_class = "type-group bvt-group" if group == "BVT" else "type-group"
+    lines = [f'<tbody class="{tbody_class}">']
+
+    index = 0
+    while index < len(group_rows):
+        env = group_rows[index][0].env
+        env_end = index
+        while env_end < len(group_rows) and group_rows[env_end][0].env == env:
+            env_end += 1
+        env_span = env_end - index
+
+        for row_index in range(index, env_end):
+            row_key, values = group_rows[row_index]
+            cells = ["<tr>"]
+            if row_index == 0:
+                cells.append(title_cell_html)
+            if row_index == index:
+                if env_span > 1:
+                    cells.append(f'<td class="platform-label" rowspan="{env_span}">{row_key.env}</td>')
+                else:
+                    cells.append(f'<td class="platform-label">{row_key.env}</td>')
+            cells.append(f"<td>{row_key.name}</td>")
+            cells.extend(values)  # values are already full <td>...</td> HTML
+            cells.append("</tr>")
+            lines.append("".join(cells))
+
+        index = env_end
+
+    lines.append("</tbody>")
+    return "\n".join(lines) + "\n"
+
+
+def build_main_table(
+    headers: List[str],
+    rows: Dict[RowKey, List[str]],
+    group_order: List[str],
+    title_cells: Dict[str, str],
+) -> str:
+    grouped_rows: Dict[str, List[Tuple[RowKey, List[str]]]] = {}
+    for key, values in rows.items():
+        grouped_rows.setdefault(key.group, []).append((key, values))
+
+    parts = ['<table class="test-table">', build_header_row(headers)]
+    for group in group_order:
+        if group == "Performance suite":
+            continue
+        title_cell = title_cells.get(group, fallback_title_cell(group))
+        group_rows = grouped_rows.get(group, [])
+        if group_rows:
+            parts.append(build_group_tbody(group, group_rows, title_cell))
+    parts.append("</table>")
+    return "\n".join(parts)
+
+
+def build_performance_table(
+    headers: List[str],
+    rows: Dict[RowKey, List[str]],
+    title_cells: Dict[str, str],
+) -> str:
+    performance_rows = [(key, values) for key, values in rows.items() if key.group == "Performance suite"]
+    if not performance_rows:
+        return '<table class="test-table">\n' + build_header_row(headers) + "</table>"
+
+    title_cell = title_cells.get("Performance suite", fallback_title_cell("Performance suite"))
+    tbody = build_group_tbody("Performance suite", performance_rows, title_cell)
+    return '<table class="test-table">\n' + build_header_row(headers) + tbody + "</table>"
+
+
+def compose_document(prefix: str, suffix: str, timestamp_html: str, table_html: str) -> str:
+    timestamp = f"{timestamp_html}\n" if timestamp_html else ""
+    return f"{prefix}{timestamp}{table_html}\n{suffix}"
+
+
+def main() -> None:
+    summary_html = SUMMARY_PATH.read_text(encoding="utf-8", errors="replace")
+    template_html = TEMPLATE_PATH.read_text(encoding="utf-8", errors="replace")
+
+    timestamp_html = extract_timestamp(summary_html)
+    headers = extract_headers(summary_html)
+    version_count = max(len(headers) - 3, 0)
+    if version_count == 0:
+        raise RuntimeError("Expected at least three leading headers and one version column in summary.html")
+
+    rows, group_order = parse_summary_rows(summary_html, version_count)
+    prefix, suffix = extract_template_shell(template_html)
+    title_cells = extract_template_title_cells(template_html)
+
+    main_table = build_main_table(headers, rows, group_order, title_cells)
+    main_html = compose_document(prefix, suffix, timestamp_html, main_table)
+    OUTPUT_MAIN_PATH.write_text(main_html, encoding="utf-8", newline="\n")
+
+    performance_table = build_performance_table(headers, rows, title_cells)
+    performance_html = compose_document(prefix, suffix, timestamp_html, performance_table)
+    OUTPUT_PERF_PATH.write_text(performance_html, encoding="utf-8", newline="\n")
+
+    print("OK: generated dashtests.html and dashtest2.html from summary.html")
+
+
+if __name__ == "__main__":
     main()
