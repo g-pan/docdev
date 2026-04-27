@@ -7,6 +7,13 @@ This is a development repository intended to serve up github pages at docdev.gih
 which hosts several HTML pages there and many of which are displayed in sharepoint through iframe codes - preserving the styling and look of the HTML 
 
 
+#4-23-26 UPDATE WORKFLOW UPDATE:  Development is done locally in the docdev/pages workspace, but the authoritative upstream repository is the personal g-pan/docdev repo. In this hybrid setup, continue normal local work (edit, commit), then push your branch explicitly to upstream:
+
+git push upstream <branch-name>
+
+After pushing, open the g-pan/docdev repository on GitHub and create a pull request for that branch. This is the required flow for getting changes reviewed and merged.
+
+
 ### LINKS 
 <https://hpccsystems.com>
 
