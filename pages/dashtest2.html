@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>HPCC Platform Tests</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .test-table {
+        margin: 2em auto;
+        border-collapse: collapse;
+        min-width: 900px;
+        max-width: 1100px;
+    }
+    .test-table th, .test-table td {
+        border: 1px solid #ddd;
+        padding: 6px 10px;
+        text-align: center;
+    }
+    .test-table th {
+        background: #f2f2f2;
+    }
+    .type-group {
+        background-color: #f9fafc;
+    }
+    .type-group:nth-of-type(odd) {
+        background-color: #e7f7fb;
+    }
+    .test-type {
+        font-weight: bold;
+        font-size: 1em;
+        text-align: left;
+        position: relative;
+        margin: 1em auto;
+        max-width: 1100px;
+    }
+    .type-group:nth-of-type(odd) .test-type {
+        background: #b7cbe6 !important;
+    }
+    .type-group:nth-of-type(even) .test-type {
+        background: #d1d5db !important;
+    }
+    .platform-label { font-style: italic; background: #fafafa; }
+    .bullet-green { color: #16831b; font-size: 1.15em; }
+    .bullet-red { color: #d00; font-size: 1.15em; }
+    .bullet-yellow { color: #ffae00; font-size: 1.15em; }
+    .info-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 7px;
+        cursor: pointer;
+        position: relative;
+        text-decoration: none;
+    }
+    .info-icon .tooltip {
+        display: none;
+        position: absolute;
+        left: 22px;
+        top: 0;
+        background: #2186eb;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    .info-icon:hover .tooltip,
+    .info-icon:focus .tooltip {
+        display: block;
+    }
+    .info-icon:focus {
+        outline: 2px solid #2186eb;
+    }
+    .bvt-group {
+        background-color: #f3e5f5 !important;
+    }
+    .bvt-group .test-type {
+        background: #ce93d8 !important;
+    }
+</style>
+</head>
+<body>
+<H3> Updated at: 2026.04.28 05:15:02</H3>
+<table class="test-table">
+<tr><th>Test Type</th><th>Environment</th><th>Engine</th><th>04/28</th></tr>
+<tbody class="type-group">
+<tr><td class="test-type" rowspan="2">
+    Performance <br/>Suite
+    <a aria-label="More info about Performance Suite" class="info-icon" href="https://reedelsevier.sharepoint.com/sites/HPCCPlatformTesting/SitePages/Platform-Test-Reports1.aspx?source=SiteSettings#obt-runs-against-these-versions" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconPerf" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconPerf">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Platform and environment performance tests. Click for the complete OvernightPerformance suite report.</span>
+</a>
+</td><td class="platform-label" rowspan="2">BM</td><td>Thor</td><td align='center' style="background-color:#00FF00"><a href="http://172.190.97.122/OBT/digest.html#master" target="#">323/323<br>(100.0%)</a></td></tr>
+<tr><td>Roxie</td><td align='center' style="background-color:#00FF00"><a href="http://172.190.97.122/OBT/digest.html#master" target="#">350/350<br>(100.0%)</a></td></tr>
+</tbody>
+</table>
+
+</body>
+</html>

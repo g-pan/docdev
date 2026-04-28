@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>HPCC Platform Tests</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .test-table {
+        margin: 2em auto;
+        border-collapse: collapse;
+        min-width: 900px;
+        max-width: 1100px;
+    }
+    .test-table th, .test-table td {
+        border: 1px solid #ddd;
+        padding: 6px 10px;
+        text-align: center;
+    }
+    .test-table th {
+        background: #f2f2f2;
+    }
+    .type-group {
+        background-color: #f9fafc;
+    }
+    .type-group:nth-of-type(odd) {
+        background-color: #e7f7fb;
+    }
+    .test-type {
+           font-weight: bold;
+           font-size: 1em;
+        text-align: left;
+        position: relative;
+    }
+    .type-group:nth-of-type(odd) .test-type {
+        background: #b7cbe6 !important;
+    }
+    .type-group:nth-of-type(even) .test-type {
+        background: #d1d5db !important;
+    }
+    .platform-label { font-style: italic; background: #fafafa; }
+    .bullet-green { color: #16831b; font-size: 1.15em; }
+    .bullet-red { color: #d00; font-size: 1.15em; }
+    .bullet-yellow { color: #ffae00; font-size: 1.15em; }
+    .info-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 7px;
+        cursor: pointer;
+        position: relative;
+        text-decoration: none;
+    }
+    .info-icon .tooltip {
+        display: none;
+        position: absolute;
+        left: 22px;
+        top: 0;
+        background: #2186eb;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    .info-icon:hover .tooltip,
+    .info-icon:focus .tooltip {
+        display: block;
+    }
+    .info-icon:focus {
+        outline: 2px solid #2186eb;
+    }
+    /* BVT group unique styling */
+    .bvt-group {
+        background-color: #f3e5f5 !important;
+    }
+    .bvt-group .test-type {
+        background: #ce93d8 !important;
+    }
+</style>
+</head>
+<body>
+<table class="test-table">
+<tr>
+<th>Test Type</th>
+<th>Environment</th>
+<th>Engine</th>
+<th>9.10.x</th>
+<th>9.12.x</th>
+<th>9.14.x</th>
+<th>10.0.x</th>
+<th>10.2.x</th>
+<th>master</th>
+</tr>
+<!-- REGRESSION -->
+<tbody class="type-group">
+<tr>
+<td class="test-type" rowspan="3">
+    Overnight <br/>Regression<br/> Suite
+    <a aria-label="More info about the Overnight Regression Suite tests" class="info-icon" href="http://172.190.97.122/OBT/digest.html" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconRegression" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconRegression">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Tests for regressions in core functionality across platform versions. Click for the complete OBT report digest.</span>
+</a>
+</td>
+<td class="platform-label" rowspan="3">BM/VM</td>
+<td>Hthor</td>
+<td><span class="bullet-green">●</span> 1036/1036<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1039/1039<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1406/1406<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1121/1121<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1127/1127<br/>(100.0%)</td>
+<td>No data</td>
+</tr>
+<tr>
+<td>Thor</td>
+<td><span class="bullet-green">●</span> 917/917 (100%)</td>
+<td><span class="bullet-green">●</span> 921/922 (99.9%)</td>
+<td><span class="bullet-green">●</span> 973/973<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 988/988<br/>(100.0%)</td>
+<td><span class="bullet-yellow">●</span> 992/993<br/>(99.9%)</td>
+<td>No data</td>
+</tr>
+<tr>
+<td>Roxie</td>
+<td><span class="bullet-green">●</span> 1128/1128 (100%)</td>
+<td><span class="bullet-green">●</span> 1131/1131 (100%)</td>
+<td><span class="bullet-green">●</span> 1192/1192<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1207/1207<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 1212/1212<br/>(100.0%)</td>
+<td>No data</td>
+</tr>
+</tbody>
+<!-- UNIT TESTS -->
+<tbody class="type-group">
+<tr>
+<td class="test-type" rowspan="3">
+    Overnight <br/>Unit Tests
+    <a aria-label="More info about the Overnight Unit Tests" class="info-icon" href="http://172.190.97.122/OBT/digest.html" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconUnit" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconUnit">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Overnight Unit Tests. Click for the complete OBT report digest.</span>
+</a>
+</td>
+<td class="platform-label">BM/VM</td>
+<td>N/A</td>
+<td><span class="bullet-green">●</span> 420/420<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 481/481<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 553/553<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 595/595<br/>(100.0%)</td>
+<td><span class="bullet-green">●</span> 628/628<br/>(100.0%)</td>
+<td>No data</td>
+</tr>
+</tbody>
+<!-- PERFORMANCE -->
+<tbody class="type-group">
+<tr>
+<td class="test-type" rowspan="4">
+    Performance <br/>Suite
+    <a aria-label="More info about Performance Suite" class="info-icon" href="http://172.190.97.122/OBT/digest.html" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconPerf" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconPerf">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Platform and environment performance tests. Click for the complete OvernightPerformance suite report.</span>
+</a>
+</td>
+<td class="platform-label" rowspan="2">BM</td>
+<td>thor</td>
+<td colspan="5">N/A</td>
+<td><span class="bullet-green">●</span> 323/323<br/>(100.0%)</td>
+</tr>
+<tr>
+<td>roxie</td>
+<td colspan="5">N/A</td>
+<td><span class="bullet-green">●</span> 350/350 (100%)</td>
+</tr>
+<tr>
+<td class="platform-label" rowspan="2">VM</td>
+<td>thor</td>
+<td colspan="5">N/A</td>
+<td><span class="bullet-green">●</span> 323/323 (100%)</td>
+</tr>
+<tr>
+<td>roxie</td>
+<td colspan="5">N/A</td>
+<td><span class="bullet-green">●</span> 350/350 (100%)</td>
+</tr>
+<!-- COVERAGE -->
+<tbody class="type-group">
+<tr>
+<td class="test-type">
+    Coverage
+    <a aria-label="More info about Coverage tests" class="info-icon" href="http://172.190.97.122/coverage/hpcc_coverage-latest/" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconCoverage" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconCoverage">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Code coverage rates for test suites. Click for full report.</span>
+</a>
+</td>
+<td></td>
+<td></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td><span class="bullet-yellow">●</span> 81.9% lines</td>
+</tr>
+</tbody>
+<!-- BVT -->
+<tbody class="type-group bvt-group">
+<tr>
+<td class="test-type" rowspan="4">
+    Build Verification <br/>Testing
+    <a aria-label="More info about Build Verification Testing" class="info-icon" href="#" tabindex="0" target="_blank">
+<svg aria-labelledby="infoIconBVT" height="16" viewbox="0 0 16 16" width="16">
+<title id="infoIconBVT">More info</title>
+<circle cx="8" cy="8" fill="#2186eb" r="8"></circle>
+<text fill="#fff" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" x="8" y="11">i</text>
+</svg>
+<span class="tooltip">Build Verification Testing - validates key platform features post-build. Click for the complete BVT report.</span>
+</a>
+</td>
+<td class="platform-label" rowspan="4">BM/VM</td>
+<td class="platform-label">hthor</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td><span class="bullet-green">●</span> 129/129 (100%)</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td class="platform-label">Thor</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td><span class="bullet-green">●</span> 42/42 (100%)</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td class="platform-label">Roxie</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td><span class="bullet-green">●</span> 9/9 (100%)</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td class="platform-label">Regressions</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td><span class="bullet-green">●</span> 129/129 (100%)</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</tbody></table>
+</body>
+</html>
