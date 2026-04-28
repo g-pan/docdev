@@ -129,15 +129,6 @@ def extract_timestamp(summary_html: str) -> str:
     return match.group(0).strip() if match else ""
 
 
-def timestamp_to_mmdd_label(timestamp_html: str) -> str:
-    match = re.search(r"(\d{4})[./-](\d{2})[./-](\d{2})", timestamp_html)
-    if not match:
-        return "Date"
-    month = match.group(2)
-    day = match.group(3)
-    return f"{month}/{day}"
-
-
 def extract_headers(summary_html: str) -> List[str]:
     headers = [strip_tags(h) for h in TH_RE.findall(summary_html)]
     if not headers:
@@ -285,6 +276,14 @@ def build_group_tbody(
     return "\n".join(lines) + "\n"
 
 
+def get_master_col_index(headers: List[str]) -> int:
+    """Find the index of the 'master' column in the values list (relative to versions only)."""
+    for i, header in enumerate(headers[3:]):
+        if header.strip().lower() == "master":
+            return i  # Return index relative to the version columns (0-based)
+    return len(headers) - 4  # Default to last version column index
+
+
 def build_main_table(
     headers: List[str],
     rows: Dict[RowKey, List[str]],
@@ -296,13 +295,27 @@ def build_main_table(
         grouped_rows.setdefault(key.group, []).append((key, values))
 
     parts = ['<table class="test-table">', build_header_row(headers)]
+    master_idx = get_master_col_index(headers)
+    
     for group in group_order:
-        if group == "Performance suite":
-            continue
         title_cell = title_cells.get(group, fallback_title_cell(group))
         group_rows = grouped_rows.get(group, [])
-        if group_rows:
+        if not group_rows:
+            continue
+        
+        # For Performance suite, show only master column value; rest are N/A
+        if group == "Performance suite":
+            perf_rows_filtered = []
+            for key, values in group_rows:
+                # Extract master column value, keep rest as N/A
+                na_cells = ["<td>N/A</td>"] * len(values)
+                if master_idx < len(values):
+                    na_cells[master_idx] = values[master_idx]
+                perf_rows_filtered.append((key, na_cells))
+            parts.append(build_group_tbody(group, perf_rows_filtered, title_cell))
+        else:
             parts.append(build_group_tbody(group, group_rows, title_cell))
+    
     parts.append("</table>")
     return "\n".join(parts)
 
@@ -311,25 +324,14 @@ def build_performance_table(
     headers: List[str],
     rows: Dict[RowKey, List[str]],
     title_cells: Dict[str, str],
-    timestamp_html: str,
 ) -> str:
     performance_rows = [(key, values) for key, values in rows.items() if key.group == "Performance suite"]
-    perf_headers = headers[:3] + [timestamp_to_mmdd_label(timestamp_html)]
-
-    def last_non_na_cell(values: List[str]) -> str:
-        for cell in reversed(values):
-            if strip_tags(cell).upper() != "N/A":
-                return cell
-        return "<td>N/A</td>"
-
     if not performance_rows:
-        return '<table class="test-table">\n' + build_header_row(perf_headers) + "</table>"
-
-    compact_rows = [(key, [last_non_na_cell(values)]) for key, values in performance_rows]
+        return '<table class="test-table">\n' + build_header_row(headers) + "</table>"
 
     title_cell = title_cells.get("Performance suite", fallback_title_cell("Performance suite"))
-    tbody = build_group_tbody("Performance suite", compact_rows, title_cell)
-    return '<table class="test-table">\n' + build_header_row(perf_headers) + tbody + "</table>"
+    tbody = build_group_tbody("Performance suite", performance_rows, title_cell)
+    return '<table class="test-table">\n' + build_header_row(headers) + tbody + "</table>"
 
 
 def compose_document(prefix: str, suffix: str, timestamp_html: str, table_html: str) -> str:
@@ -355,11 +357,7 @@ def main() -> None:
     main_html = compose_document(prefix, suffix, timestamp_html, main_table)
     OUTPUT_MAIN_PATH.write_text(main_html, encoding="utf-8", newline="\n")
 
-    performance_table = build_performance_table(headers, rows, title_cells, timestamp_html)
-    performance_html = compose_document(prefix, suffix, timestamp_html, performance_table)
-    OUTPUT_PERF_PATH.write_text(performance_html, encoding="utf-8", newline="\n")
-
-    print("OK: generated dashtests.html and dashtest2.html from summary.html")
+    print("OK: generated dashtests.html from summary.html")
 
 
 if __name__ == "__main__":

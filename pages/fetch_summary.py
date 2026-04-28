@@ -1,21 +1,30 @@
 from pathlib import Path
 
 import requests
+from pathlib import Path
 
-SOURCE_URL = "http://172.190.97.122/OBT/summary.html"
-OUTPUT_PATH = Path(__file__).resolve().parent / "summary.html"
+# Fetch OBT summary
+obt_url = 'http://172.190.97.122/OBT/summary.html'
+coverage_url = 'http://172.190.97.122/coverage/coverageSummary.html'
 
+# Destination file paths
+summary_path = Path('summary.html')
+dashtest2_path = Path('dashtest2.html')
 
-def main() -> None:
-    try:
-        response = requests.get(SOURCE_URL, timeout=30)
-        response.raise_for_status()
-    except requests.RequestException as exc:
-        raise SystemExit(f"Failed to download summary from {SOURCE_URL}: {exc}") from exc
+print("Fetching OBT summary...")
+try:
+    response = requests.get(obt_url, timeout=30)
+    response.raise_for_status()
+    summary_path.write_text(response.text, encoding="utf-8", newline="\n")
+    print('OBT summary downloaded successfully.')
+except requests.RequestException as exc:
+    print(f'Failed to download OBT summary: {exc}')
 
-    OUTPUT_PATH.write_text(response.text, encoding="utf-8", newline="\n")
-    print(f"Summary downloaded successfully to {OUTPUT_PATH}")
-
-
-if __name__ == "__main__":
-    main()
+print("Fetching coverage summary...")
+try:
+    response = requests.get(coverage_url, timeout=30)
+    response.raise_for_status()
+    dashtest2_path.write_text(response.text, encoding="utf-8", newline="\n")
+    print('Coverage summary downloaded successfully and saved to dashtest2.html.')
+except requests.RequestException as exc:
+    print(f'Failed to download coverage summary: {exc}')
