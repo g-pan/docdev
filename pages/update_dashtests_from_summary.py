@@ -357,11 +357,7 @@ def main() -> None:
     main_html = compose_document(prefix, suffix, timestamp_html, main_table)
     OUTPUT_MAIN_PATH.write_text(main_html, encoding="utf-8", newline="\n")
 
-    performance_table = build_performance_table(headers, rows, title_cells)
-    performance_html = compose_document(prefix, suffix, timestamp_html, performance_table)
-    OUTPUT_PERF_PATH.write_text(performance_html, encoding="utf-8", newline="\n")
-
-    print("OK: generated dashtests.html and dashtest2.html from summary.html")
+    print("OK: generated dashtests.html from summary.html")
 
 
 if __name__ == "__main__":
