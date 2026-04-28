@@ -129,6 +129,15 @@ def extract_timestamp(summary_html: str) -> str:
     return match.group(0).strip() if match else ""
 
 
+def timestamp_to_mmdd_label(timestamp_html: str) -> str:
+    match = re.search(r"(\d{4})[./-](\d{2})[./-](\d{2})", timestamp_html)
+    if not match:
+        return "Date"
+    month = match.group(2)
+    day = match.group(3)
+    return f"{month}/{day}"
+
+
 def extract_headers(summary_html: str) -> List[str]:
     headers = [strip_tags(h) for h in TH_RE.findall(summary_html)]
     if not headers:
@@ -302,14 +311,25 @@ def build_performance_table(
     headers: List[str],
     rows: Dict[RowKey, List[str]],
     title_cells: Dict[str, str],
+    timestamp_html: str,
 ) -> str:
     performance_rows = [(key, values) for key, values in rows.items() if key.group == "Performance suite"]
+    perf_headers = headers[:3] + [timestamp_to_mmdd_label(timestamp_html)]
+
+    def last_non_na_cell(values: List[str]) -> str:
+        for cell in reversed(values):
+            if strip_tags(cell).upper() != "N/A":
+                return cell
+        return "<td>N/A</td>"
+
     if not performance_rows:
-        return '<table class="test-table">\n' + build_header_row(headers) + "</table>"
+        return '<table class="test-table">\n' + build_header_row(perf_headers) + "</table>"
+
+    compact_rows = [(key, [last_non_na_cell(values)]) for key, values in performance_rows]
 
     title_cell = title_cells.get("Performance suite", fallback_title_cell("Performance suite"))
-    tbody = build_group_tbody("Performance suite", performance_rows, title_cell)
-    return '<table class="test-table">\n' + build_header_row(headers) + tbody + "</table>"
+    tbody = build_group_tbody("Performance suite", compact_rows, title_cell)
+    return '<table class="test-table">\n' + build_header_row(perf_headers) + tbody + "</table>"
 
 
 def compose_document(prefix: str, suffix: str, timestamp_html: str, table_html: str) -> str:
@@ -335,7 +355,7 @@ def main() -> None:
     main_html = compose_document(prefix, suffix, timestamp_html, main_table)
     OUTPUT_MAIN_PATH.write_text(main_html, encoding="utf-8", newline="\n")
 
-    performance_table = build_performance_table(headers, rows, title_cells)
+    performance_table = build_performance_table(headers, rows, title_cells, timestamp_html)
     performance_html = compose_document(prefix, suffix, timestamp_html, performance_table)
     OUTPUT_PERF_PATH.write_text(performance_html, encoding="utf-8", newline="\n")
 
