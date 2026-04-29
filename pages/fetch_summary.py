@@ -6,6 +6,7 @@ import re
 obt_url = 'http://172.190.97.122/OBT/summary.html'
 coverage_url = 'http://172.190.97.122/coverage/coverageSummary.html'
 coverage_base_url = 'http://172.190.97.122/coverage/'
+bvt_url = 'http://172.190.97.122/BVT/BVT.json'
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -13,6 +14,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 summary_path = SCRIPT_DIR / 'summary.html'
 dashtest2_path = SCRIPT_DIR / 'dashtest2.html'
 template_path = SCRIPT_DIR / 'dashtests.TMPL.html'
+bvt_path = SCRIPT_DIR.parent / 'bvt' / 'BVT.json'
 
 
 def extract_template_shell(template_html: str) -> tuple[str, str]:
@@ -98,6 +100,26 @@ def main() -> None:
         print('Coverage summary downloaded, styled, and saved to pages/dashtest2.html.')
     except requests.RequestException as exc:
         print(f'Failed to download coverage summary: {exc}')
+
+    print("Fetching BVT JSON...")
+    try:
+        response = requests.get(bvt_url, timeout=30)
+        response.raise_for_status()
+        bvt_path.parent.mkdir(parents=True, exist_ok=True)
+        bvt_path.write_text(response.text, encoding="utf-8", newline="\n")
+        print(f'BVT JSON downloaded successfully and saved to {bvt_path}.')
+    except requests.RequestException as exc:
+        print(f'Failed to download BVT JSON: {exc}')
+        if bvt_path.exists():
+            print(f'Using existing local fallback: {bvt_path}')
+        else:
+            print('No local BVT fallback found. Dashboard generation will continue without BVT card.')
+    except Exception as exc:
+        print(f'BVT step encountered a non-fatal error: {exc}')
+        if bvt_path.exists():
+            print(f'Using existing local fallback: {bvt_path}')
+        else:
+            print('No local BVT fallback found. Dashboard generation will continue without BVT card.')
 
 
 if __name__ == '__main__':

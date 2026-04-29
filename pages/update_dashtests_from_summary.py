@@ -14,17 +14,19 @@ summary file already provides display-ready cell content.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
-from html import unescape
+from html import escape, unescape
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SUMMARY_PATH = SCRIPT_DIR / "summary.html"
 TEMPLATE_PATH = SCRIPT_DIR / "dashtests.TMPL.html"
 OUTPUT_MAIN_PATH = SCRIPT_DIR / "dashtests.html"
 OUTPUT_PERF_PATH = SCRIPT_DIR / "dashtest2.html"
+BVT_JSON_PATH = SCRIPT_DIR.parent / "bvt" / "BVT.json"
 
 TD_RE = re.compile(r"<td([^>]*)>(.*?)</td>", re.IGNORECASE | re.DOTALL)
 TH_RE = re.compile(r"<th[^>]*>(.*?)</th>", re.IGNORECASE | re.DOTALL)
@@ -339,6 +341,69 @@ def compose_document(prefix: str, suffix: str, timestamp_html: str, table_html: 
     return f"{prefix}{timestamp}{table_html}\n{suffix}"
 
 
+def load_bvt_release() -> Optional[Dict[str, Any]]:
+    if not BVT_JSON_PATH.exists():
+        return None
+
+    try:
+        payload = json.loads(BVT_JSON_PATH.read_text(encoding="utf-8", errors="replace"))
+    except json.JSONDecodeError:
+        return None
+
+    releases = payload.get("Releases") if isinstance(payload, dict) else None
+    if not isinstance(releases, list) or not releases:
+        return None
+
+    first = releases[0]
+    return first if isinstance(first, dict) else None
+
+
+def status_badge(value: str) -> str:
+    normalized = value.strip().lower()
+    color = "#16a34a" if normalized in {"passed", "pass", "ok", "success"} else "#dc2626"
+    if normalized not in {"passed", "pass", "ok", "success", "failed", "fail", "error"}:
+        color = "#f59e0b"
+    return (
+        f'<span style="display:inline-block;padding:2px 8px;border-radius:999px;color:#fff;'
+        f'font-weight:600;background:{color};">{escape(value)}</span>'
+    )
+
+
+def build_bvt_card(bvt_release: Dict[str, Any]) -> str:
+    release_name = str(bvt_release.get("name", "N/A"))
+    overall_result = str(bvt_release.get("result", "unknown"))
+
+    check_items: List[Tuple[str, str]] = []
+    for key, value in bvt_release.items():
+        if key in {"name", "result"}:
+            continue
+        check_items.append((str(key).strip(), str(value).strip()))
+
+    if not check_items:
+        check_items = [("No checks found", "unknown")]
+
+    rows: List[str] = []
+    for index, (check_name, check_status) in enumerate(check_items):
+        cells = ["<tr>"]
+        if index == 0:
+            cells.append(f'<td rowspan="{len(check_items)}">{escape(release_name)}</td>')
+            cells.append(f'<td rowspan="{len(check_items)}">{status_badge(overall_result)}</td>')
+        cells.append(f"<td>{escape(check_name)}</td>")
+        cells.append(f"<td>{status_badge(check_status)}</td>")
+        cells.append("</tr>")
+        rows.append("".join(cells))
+
+    return (
+        '\n<div style="max-width:1100px;margin:1.25em auto 0;">\n'
+        '  <h3 style="margin:0 0 0.5em 0;">Build Verification Test (BVT)</h3>\n'
+        '  <table class="test-table" style="min-width:700px;max-width:1100px;">\n'
+        '    <tr><th>Release</th><th>Overall</th><th>Check</th><th>Status</th></tr>\n'
+        f"{chr(10).join(rows)}\n"
+        '  </table>\n'
+        '</div>\n'
+    )
+
+
 def main() -> None:
     summary_html = SUMMARY_PATH.read_text(encoding="utf-8", errors="replace")
     template_html = TEMPLATE_PATH.read_text(encoding="utf-8", errors="replace")
@@ -354,7 +419,9 @@ def main() -> None:
     title_cells = extract_template_title_cells(template_html)
 
     main_table = build_main_table(headers, rows, group_order, title_cells)
-    main_html = compose_document(prefix, suffix, timestamp_html, main_table)
+    bvt_release = load_bvt_release()
+    bvt_card_html = build_bvt_card(bvt_release) if bvt_release else ""
+    main_html = compose_document(prefix, suffix, timestamp_html, main_table + bvt_card_html)
     OUTPUT_MAIN_PATH.write_text(main_html, encoding="utf-8", newline="\n")
 
     print("OK: generated dashtests.html from summary.html")
