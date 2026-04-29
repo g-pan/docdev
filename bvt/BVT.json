@@ -1,0 +1,13 @@
+{
+  "Releases": [
+    {
+      "name": "10.4.0",
+      "result": "passed",
+      "Check Docker Image": "passed",
+      "Verify HELM HPCC Repo": "passed",
+      "Deploy HPCC in AKS": "passed",
+      "Verify Service IPs": "passed",
+      "Data Tutorial Test": "passed"
+    }
+  ]
+}
